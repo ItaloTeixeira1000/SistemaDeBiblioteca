@@ -1,0 +1,18 @@
+package trabalho_java;
+
+import javax.swing.JOptionPane;
+
+public class java {
+	public static void main(String args[]) {
+		
+		int tempo;
+		int velocidade;
+		int distancia;
+		
+		tempo = Integer.parseInt(JOptionPane.showInputDialog("Digite o valor do tempo:"));
+		velocidade = Integer.parseInt(JOptionPane.showInputDialog("Digite o valor do tempo:"));
+		 distancia = tempo * velocidade;
+		
+	}
+	
+}

@@ -1,0 +1,27 @@
+package trabalho_java;
+
+import javax.swing.JOptionPane;
+
+public class java {
+	public static void main(String args[]) {
+		
+		int tempo;
+		int velocidade;
+		int distancia;
+		int litro;
+		
+		tempo = Integer.parseInt(JOptionPane.showInputDialog("Digite o valor do tempo:"));
+		velocidade = Integer.parseInt(JOptionPane.showInputDialog("Digite o valor do velocidade:"));
+		distancia = tempo * velocidade;
+		JOptionPane.showMessageDialog(null,"Esta é a velocidade: "+velocidade);
+		JOptionPane.showMessageDialog(null,"Este é o tempo: "+tempo);
+		JOptionPane.showMessageDialog(null,"Esta é a distancia: "+distancia);
+		
+		
+		litro = distancia/2;
+		JOptionPane.showMessageDialog(null,"Este é a quantidade de litros utilizada:"+
+		litro);
+		
+	}
+	
+}

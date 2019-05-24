@@ -1,0 +1,17 @@
+package trabalho_java;
+
+import javax.swing.JOptionPane;
+
+public class itemD {
+	public static void main(String args[]) {
+		
+		int C;
+		int K;
+		
+		C = Integer.parseInt(JOptionPane.showInputDialog("Digite o valor do grau Celsius: "));
+		K = C + 273.15;
+		
+		JOptionPane.showMessageDialog(null,"A temperatura em Kelvin é: ");
+	}
+
+}
