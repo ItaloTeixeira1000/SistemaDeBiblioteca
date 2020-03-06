@@ -75,6 +75,11 @@ public class Livro {
 		this.area = area;
 	}
 	
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return getTitulo();
+	}
 	
 
 }

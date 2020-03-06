@@ -1,7 +1,7 @@
 package model.bean;
 
 public class Leitor {
-	private int idLeitor;
+	private int idleitor;
 	private String nome;
 	private String sobrenome;
 	private String cpf;
@@ -9,10 +9,10 @@ public class Leitor {
 	private String dataNascimento;
 	private String email;
 	public int getIdLeitor() {
-		return idLeitor;
+		return idleitor;
 	}
 	public void setIdLeitor(int idLeitor) {
-		this.idLeitor = idLeitor;
+		this.idleitor = idLeitor;
 	}
 	public String getNome() {
 		return nome;
@@ -33,7 +33,7 @@ public class Leitor {
 		this.cpf = cpf;
 	}
 	public String getSexo() {
-		return sexo;
+		return  sexo;
 	}
 	public void setSexo(String sexo) {
 		this.sexo = sexo;
@@ -49,6 +49,12 @@ public class Leitor {
 	}
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return getNome();
 	}
 	
 	

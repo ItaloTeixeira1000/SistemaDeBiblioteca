@@ -16,6 +16,7 @@ import java.awt.event.ActionEvent;
 import java.awt.SystemColor;
 import java.awt.Font;
 import java.awt.Color;
+import javax.swing.ImageIcon;
 
 public class CadastroLeitor extends JInternalFrame {
 	private JTextField txtNome;
@@ -46,7 +47,7 @@ public class CadastroLeitor extends JInternalFrame {
 	 */
 	public CadastroLeitor() {
 		setClosable(true);
-		setBounds(100, 100, 930, 724);
+		setBounds(100, 100, 930, 526);
 		getContentPane().setLayout(null);
 		
 		JPanel panel = new JPanel();
@@ -56,14 +57,14 @@ public class CadastroLeitor extends JInternalFrame {
 		panel.setLayout(null);
 		
 		JLabel lblNome = new JLabel("Nome");
+		lblNome.setBounds(134, 11, 55, 14);
 		lblNome.setFont(new Font("Segoe Print", Font.PLAIN, 12));
 		lblNome.setBackground(SystemColor.activeCaption);
-		lblNome.setBounds(134, 11, 55, 14);
 		panel.add(lblNome);
 		
 		txtNome = new JTextField();
-		txtNome.setFont(new Font("Segoe Print", Font.PLAIN, 12));
 		txtNome.setBounds(134, 36, 273, 20);
+		txtNome.setFont(new Font("Segoe Print", Font.PLAIN, 12));
 		panel.add(txtNome);
 		txtNome.setColumns(10);
 		
@@ -77,8 +78,8 @@ public class CadastroLeitor extends JInternalFrame {
 		txtSobrenome.setColumns(10);
 		
 		txtCpf = new JTextField();
-		txtCpf.setFont(new Font("Segoe Print", Font.PLAIN, 12));
 		txtCpf.setBounds(134, 188, 273, 20);
+		txtCpf.setFont(new Font("Segoe Print", Font.PLAIN, 12));
 		panel.add(txtCpf);
 		txtCpf.setColumns(10);
 		
@@ -110,6 +111,7 @@ public class CadastroLeitor extends JInternalFrame {
 		txtEmail.setColumns(10);
 		
 		JButton btnOk = new JButton("OK");
+		btnOk.setBounds(318, 358, 89, 23);
 		btnOk.setBackground(new Color(153, 153, 255));
 		btnOk.setFont(new Font("Segoe Print", Font.PLAIN, 12));
 		btnOk.addActionListener(new ActionListener() {
@@ -124,15 +126,15 @@ public class CadastroLeitor extends JInternalFrame {
 				l.setDataNascimento(txtData.getText());
 				l.setEmail(txtEmail.getText());
 				
-				if(dao.create(l)) {
-					dispose();
-				}
+				dao.create(l);
+				
+			
 			}
 		});
-		btnOk.setBounds(318, 358, 89, 23);
 		panel.add(btnOk);
 		
 		JButton btnCancelar = new JButton("Cancelar");
+		btnCancelar.setBounds(501, 358, 89, 23);
 		btnCancelar.setFont(new Font("Segoe Print", Font.PLAIN, 12));
 		btnCancelar.setBackground(new Color(153, 153, 255));
 		btnCancelar.addActionListener(new ActionListener() {
@@ -140,13 +142,17 @@ public class CadastroLeitor extends JInternalFrame {
 				dispose();
 			}
 		});
-		btnCancelar.setBounds(501, 358, 89, 23);
 		panel.add(btnCancelar);
 		
 		JLabel lblCpf = new JLabel("CPF");
-		lblCpf.setFont(new Font("Segoe Print", Font.PLAIN, 12));
 		lblCpf.setBounds(134, 163, 46, 14);
+		lblCpf.setFont(new Font("Segoe Print", Font.PLAIN, 12));
 		panel.add(lblCpf);
+		
+		JLabel label = new JLabel("");
+		label.setIcon(new ImageIcon("C:\\Users\\Suporte\\Desktop\\Trabalho\\TrabalhoPedro\\Biblioteca\\src\\images\\ca.jpg"));
+		label.setBounds(0, 0, 914, 742);
+		panel.add(label);
 
 	}
 }

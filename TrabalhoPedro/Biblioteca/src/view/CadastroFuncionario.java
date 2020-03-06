@@ -17,6 +17,7 @@ import java.awt.event.ActionEvent;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.SystemColor;
+import javax.swing.ImageIcon;
 
 public class CadastroFuncionario extends JFrame {
 
@@ -212,5 +213,10 @@ public class CadastroFuncionario extends JFrame {
 		btnVoltar.setFont(new Font("Segoe Print", Font.PLAIN, 11));
 		btnVoltar.setBounds(587, 297, 89, 23);
 		contentPane.add(btnVoltar);
+		
+		JLabel label = new JLabel("");
+		label.setIcon(new ImageIcon("C:\\Users\\Suporte\\Desktop\\Trabalho\\TrabalhoPedro\\Biblioteca\\src\\images\\ca.jpg"));
+		label.setBounds(0, 0, 915, 704);
+		contentPane.add(label);
 	}
 }

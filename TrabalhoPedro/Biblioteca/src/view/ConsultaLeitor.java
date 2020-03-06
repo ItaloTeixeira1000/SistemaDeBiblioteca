@@ -3,36 +3,42 @@ package view;
 import java.awt.EventQueue;
 
 import javax.swing.JInternalFrame;
-import javax.swing.JPanel;
-import java.awt.Dimension;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JTextField;
 import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.JButton;
-import javax.swing.table.TableModel;
+import java.awt.GridLayout;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JScrollPane;
+import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
+
+import model.bean.Funcionario;
+import model.bean.Leitor;
+import model.dao.FuncionarioDAO;
+import model.dao.LeitorDAO;
+
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+import javax.swing.JButton;
+import java.awt.Font;
+import javax.swing.ImageIcon;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.SystemColor;
+import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
 
 public class ConsultaLeitor extends JInternalFrame {
+	private JTable JTLeitor;
 	private JTextField txtNome;
 	private JTextField txtSobrenome;
-	private JTextField txtCpf;
-	private JTextField txtSexo;
-	private JTextField txtData;
-	private JTable jTLeitores;
 	private JTextField txtEmail;
+	private JTextField txtData;
+	private JTextField txtCpf;
+	private JTextField txtBuscaNome;
 
 	/**
 	 * Launch the application.
@@ -54,210 +60,309 @@ public class ConsultaLeitor extends JInternalFrame {
 	 * Create the frame.
 	 */
 	public ConsultaLeitor() {
+		setTitle("Consulta de Leitores");
+		
 		setClosable(true);
-		setTitle("Consulta de Leitores Cadastrados");
-		setBounds(100, 100, 885, 495);
+		setBounds(100, 100, 797, 461);
 		getContentPane().setLayout(null);
 		
 		JPanel panel = new JPanel();
-		panel.setBackground(Color.LIGHT_GRAY);
-		panel.setBounds(0, 0, 869, 169);
+		panel.setBounds(0, 0, 781, 193);
 		getContentPane().add(panel);
 		panel.setLayout(null);
 		
 		JLabel lblNome = new JLabel("Nome");
-		lblNome.setFont(new Font("Segoe Print", Font.PLAIN, 12));
-		lblNome.setBackground(new Color(240, 240, 240));
+		lblNome.setFont(new Font("Comic Sans MS", Font.PLAIN, 13));
 		lblNome.setBounds(10, 11, 46, 14);
 		panel.add(lblNome);
 		
 		txtNome = new JTextField();
-		txtNome.setFont(new Font("Segoe Print", Font.PLAIN, 12));
-		txtNome.setBounds(20, 36, 163, 20);
+		txtNome.setBounds(20, 36, 180, 20);
 		panel.add(txtNome);
 		txtNome.setColumns(10);
 		
+		JComboBox txtSexo = new JComboBox();
+		txtSexo.setModel(new DefaultComboBoxModel(new String[] {"Selecione o sexo", "M", "F"}));
+		txtSexo.setBounds(347, 90, 147, 20);
+		panel.add(txtSexo);
+		
 		JLabel lblSobrenome = new JLabel("Sobrenome");
-		lblSobrenome.setFont(new Font("Segoe Print", Font.PLAIN, 12));
-		lblSobrenome.setBounds(10, 67, 91, 14);
+		lblSobrenome.setFont(new Font("Comic Sans MS", Font.PLAIN, 13));
+		lblSobrenome.setBounds(10, 67, 105, 14);
 		panel.add(lblSobrenome);
 		
 		txtSobrenome = new JTextField();
-		txtSobrenome.setFont(new Font("Segoe Print", Font.PLAIN, 12));
-		txtSobrenome.setBounds(20, 92, 163, 20);
+		txtSobrenome.setBounds(20, 90, 180, 20);
 		panel.add(txtSobrenome);
 		txtSobrenome.setColumns(10);
 		
-		JLabel lblCpf = new JLabel("CPF");
-		lblCpf.setFont(new Font("Segoe Print", Font.PLAIN, 12));
-		lblCpf.setBounds(314, 11, 46, 14);
-		panel.add(lblCpf);
-		
-		txtCpf = new JTextField();
-		txtCpf.setFont(new Font("Segoe Print", Font.PLAIN, 12));
-		txtCpf.setBounds(324, 36, 163, 20);
-		panel.add(txtCpf);
-		txtCpf.setColumns(10);
-		
-		JLabel lblSexo = new JLabel("Sexo");
-		lblSexo.setFont(new Font("Segoe Print", Font.PLAIN, 12));
-		lblSexo.setBounds(314, 67, 46, 14);
-		panel.add(lblSexo);
-		
-		txtSexo = new JTextField();
-		txtSexo.setFont(new Font("Segoe Print", Font.PLAIN, 12));
-		txtSexo.setBounds(324, 92, 163, 20);
-		panel.add(txtSexo);
-		txtSexo.setColumns(10);
-		
-		JLabel lblDataDeNascimento = new JLabel("Data de Nascimento");
-		lblDataDeNascimento.setFont(new Font("Segoe Print", Font.PLAIN, 12));
-		lblDataDeNascimento.setBounds(605, 11, 134, 14);
-		panel.add(lblDataDeNascimento);
-		
-		txtData = new JTextField();
-		txtData.setFont(new Font("Segoe Print", Font.PLAIN, 12));
-		txtData.setBounds(615, 36, 217, 20);
-		panel.add(txtData);
-		txtData.setColumns(10);
-		
 		JLabel lblEmail = new JLabel("Email");
-		lblEmail.setFont(new Font("Segoe Print", Font.PLAIN, 12));
-		lblEmail.setBounds(605, 67, 46, 14);
+		lblEmail.setFont(new Font("Comic Sans MS", Font.PLAIN, 13));
+		lblEmail.setBounds(337, 11, 46, 14);
 		panel.add(lblEmail);
 		
 		txtEmail = new JTextField();
-		txtEmail.setFont(new Font("Segoe Print", Font.PLAIN, 12));
-		txtEmail.setBounds(615, 92, 217, 20);
+		txtEmail.setBounds(347, 36, 180, 20);
 		panel.add(txtEmail);
 		txtEmail.setColumns(10);
 		
+		JLabel lblSexo = new JLabel("Sexo");
+		lblSexo.setFont(new Font("Comic Sans MS", Font.PLAIN, 13));
+		lblSexo.setBounds(337, 67, 46, 14);
+		panel.add(lblSexo);
+		
+		JLabel lblDataDeNascimento = new JLabel("Data de Nascimento");
+		lblDataDeNascimento.setFont(new Font("Comic Sans MS", Font.PLAIN, 13));
+		lblDataDeNascimento.setBounds(602, 11, 157, 14);
+		panel.add(lblDataDeNascimento);
+		
+		txtData = new JTextField();
+		txtData.setBounds(612, 36, 119, 20);
+		panel.add(txtData);
+		txtData.setColumns(10);
+		
+		JLabel lblCpf = new JLabel("CPF");
+		lblCpf.setFont(new Font("Comic Sans MS", Font.PLAIN, 13));
+		lblCpf.setBounds(602, 67, 46, 14);
+		panel.add(lblCpf);
+		
+		txtCpf = new JTextField();
+		txtCpf.setBounds(612, 90, 147, 20);
+		panel.add(txtCpf);
+		txtCpf.setColumns(10);
+		
+		JButton btnNewButton = new JButton("Cadastrar");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Leitor l = new Leitor();
+				LeitorDAO dao = new LeitorDAO();
+				
+				l.setNome(txtNome.getText());
+				l.setSobrenome(txtSobrenome.getText());
+				l.setCpf(txtCpf.getText());
+				
+				l.setSexo(txtSexo.getSelectedItem().toString());
+				l.setDataNascimento(txtData.getText());
+				l.setEmail(txtEmail.getText());
+				
+				dao.create(l);
+				
+				txtNome.setText("");
+				txtSobrenome.setText("");
+				txtCpf.setText("");
+				
+				txtSexo.setModel(new DefaultComboBoxModel(new String[] {"Selecione o sexo", "M", "F"}));;
+				txtData.setText("");
+				txtEmail.setText("");
+				
+				readJTable();
+				
+			
+			
+			}
+		});
+		btnNewButton.setBounds(20, 159, 111, 23);
+		panel.add(btnNewButton);
+		
 		JButton btnAtualizar = new JButton("Atualizar");
-		btnAtualizar.setBackground(new Color(153, 153, 255));
-		btnAtualizar.setFont(new Font("Segoe Print", Font.PLAIN, 12));
 		btnAtualizar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-				if(jTLeitores.getSelectedRow() != -1) {
-					jTLeitores.setValueAt(txtNome.getText(), jTLeitores.getSelectedRow(), 0);
-					jTLeitores.setValueAt(txtSobrenome.getText(), jTLeitores.getSelectedRow(), 1);
-					jTLeitores.setValueAt(txtCpf.getText(), jTLeitores.getSelectedRow(), 2);
-					jTLeitores.setValueAt(txtSexo.getText(), jTLeitores.getSelectedRow(), 3);
-					jTLeitores.setValueAt(txtEmail.getText(), jTLeitores.getSelectedRow(), 4);
-					jTLeitores.setValueAt(txtData.getText(), jTLeitores.getSelectedRow(), 5);
+				if(JTLeitor.getSelectedRow()!=-1) {
+					Leitor l = new Leitor();
+					LeitorDAO dao = new LeitorDAO();
+					
+					l.setNome(txtNome.getText());
+					l.setSobrenome(txtSobrenome.getText());
+					l.setCpf(txtCpf.getText());
+					l.setSexo(txtSexo.getSelectedItem().toString());
+					l.setDataNascimento(txtData.getText());
+					l.setEmail(txtEmail.getText());
+					l.setIdLeitor((int)JTLeitor.getValueAt(JTLeitor.getSelectedRow(), 0));
+					
+					dao.update(l);
+					
+					txtNome.setText("");
+					txtSobrenome.setText("");
+					txtCpf.setText("");
+					txtSexo.setModel(new DefaultComboBoxModel(new String[] {"Selecione o sexo", "M", "F"}));;
+					txtData.setText("");
+					txtEmail.setText("");
+					
+					readJTable();
+				}else {
+					JOptionPane.showMessageDialog(null, "Selecione uma linha");
 				}
 			}
 		});
-		btnAtualizar.setBounds(387, 135, 89, 23);
+		btnAtualizar.setBounds(170, 159, 89, 23);
 		panel.add(btnAtualizar);
 		
 		JButton btnDeletar = new JButton("Deletar");
-		btnDeletar.setBackground(new Color(153, 153, 255));
-		btnDeletar.setFont(new Font("Segoe Print", Font.PLAIN, 12));
 		btnDeletar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-//				System.out.println("Linha selecionada " + jTLeitores.getSelectedRow());
-				if(jTLeitores.getSelectedRow() != -1) {
-					DefaultTableModel dtmLeitores = (DefaultTableModel) jTLeitores.getModel();
-					dtmLeitores.removeRow(jTLeitores.getSelectedRow());
+				if(JTLeitor.getSelectedRow()!=-1) {
+					Leitor l = new Leitor();
+					LeitorDAO dao = new LeitorDAO();
+					
+					l.setNome(txtNome.getText());
+					l.setSobrenome(txtSobrenome.getText());
+					l.setCpf(txtCpf.getText());
+					l.setSexo(txtSexo.getSelectedItem().toString());
+					l.setDataNascimento(txtData.getText());
+					l.setEmail(txtEmail.getText());
+					l.setIdLeitor((int)JTLeitor.getValueAt(JTLeitor.getSelectedRow(), 0));
+					
+					dao.delete(l);
+					
+					txtNome.setText("");
+					txtSobrenome.setText("");
+					txtCpf.setText("");
+					txtSexo.setModel(new DefaultComboBoxModel(new String[] {"Selecione o sexo", "M", "F"}));;
+					txtData.setText("");
+					txtEmail.setText("");
+					
+					readJTable();
 				}else {
-					JOptionPane.showMessageDialog(null, "Selecione um leitor cadastrado para excluir");
+					JOptionPane.showMessageDialog(null, "Selecione uma linha");
 				}
+				
 			}
 		});
-		btnDeletar.setBounds(698, 135, 89, 23);
+		btnDeletar.setBounds(294, 159, 89, 23);
 		panel.add(btnDeletar);
 		
-		JButton btnCadastrar = new JButton("Cadastrar");
-		btnCadastrar.setBackground(new Color(153, 153, 255));
-		btnCadastrar.setFont(new Font("Segoe Print", Font.PLAIN, 10));
-		btnCadastrar.addActionListener(new ActionListener() {
+		txtBuscaNome = new JTextField();
+		txtBuscaNome.setBounds(493, 159, 157, 22);
+		panel.add(txtBuscaNome);
+		txtBuscaNome.setColumns(10);
+		
+		JButton btnBuscar = new JButton("Buscar");
+		btnBuscar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				DefaultTableModel dtmLeitores = (DefaultTableModel)jTLeitores.getModel();
-				Object[] dados = {txtNome.getText(), txtSobrenome.getText(),txtCpf.getText(), txtSexo.getText(), txtData.getText(), txtEmail.getText()};
-				dtmLeitores.addRow(dados);
+				
+				
+				readJTableForName(txtBuscaNome.getText());
 			}
 		});
-		btnCadastrar.setBounds(83, 135, 89, 23);
-		panel.add(btnCadastrar);
+		btnBuscar.setBounds(660, 159, 89, 23);
+		panel.add(btnBuscar);
 		
-		JPanel panel_1 = new JPanel();
-		panel_1.setBounds(0, 168, 869, 292);
-		getContentPane().add(panel_1);
+		JLabel label = new JLabel("");
+		label.setIcon(new ImageIcon("C:\\Users\\Suporte\\Desktop\\Trabalho\\TrabalhoPedro\\Biblioteca\\src\\images\\ca.jpg"));
+		label.setBounds(0, 0, 781, 192);
+		panel.add(label);
+		
+	
 		
 		JScrollPane scrollPane = new JScrollPane();
-		GroupLayout gl_panel_1 = new GroupLayout(panel_1);
-		gl_panel_1.setHorizontalGroup(
-			gl_panel_1.createParallelGroup(Alignment.LEADING)
-				.addGroup(Alignment.TRAILING, gl_panel_1.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 849, Short.MAX_VALUE)
-					.addContainerGap())
-		);
-		gl_panel_1.setVerticalGroup(
-			gl_panel_1.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel_1.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 270, Short.MAX_VALUE)
-					.addContainerGap())
-		);
+		scrollPane.setBounds(0, 192, 781, 239);
+		getContentPane().add(scrollPane);
 		
-		jTLeitores = new JTable();
-		jTLeitores.addKeyListener(new KeyAdapter() {
+		JTLeitor = new JTable();
+		JTLeitor.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
+				if(JTLeitor.getSelectedRow() != -1) {
+					String tSexo = (String) JTLeitor.getValueAt(JTLeitor.getSelectedRow(),4).toString();
+					txtNome.setText(JTLeitor.getValueAt(JTLeitor.getSelectedRow(),1).toString());
+					txtSobrenome.setText(JTLeitor.getValueAt(JTLeitor.getSelectedRow(),2).toString());
+					txtCpf.setText(JTLeitor.getValueAt(JTLeitor.getSelectedRow(),3).toString());
+					if(tSexo == "M") {
+						txtSexo.setModel(new DefaultComboBoxModel(new String[] {tSexo,"M"}));;
+					}else {
+						txtSexo.setModel(new DefaultComboBoxModel(new String[] {tSexo,"F"}));;
+					}
+					//(JTLeitor.getValueAt(JTLeitor.getSelectedRow(),4).toString());
+					txtData.setText(JTLeitor.getValueAt(JTLeitor.getSelectedRow(),5).toString());
+					txtEmail.setText(JTLeitor.getValueAt(JTLeitor.getSelectedRow(),6).toString());
 				
-				if(jTLeitores.getSelectedRow() != -1) {
-					txtNome.setText(jTLeitores.getValueAt(jTLeitores.getSelectedRow(), 0).toString());
-					txtSobrenome.setText(jTLeitores.getValueAt(jTLeitores.getSelectedRow(), 1).toString());
-					txtCpf.setText(jTLeitores.getValueAt(jTLeitores.getSelectedRow(), 2).toString());
-					txtSexo.setText(jTLeitores.getValueAt(jTLeitores.getSelectedRow(), 3).toString());
-					txtEmail.setText(jTLeitores.getValueAt(jTLeitores.getSelectedRow(), 4).toString());
-					txtData.setText(jTLeitores.getValueAt(jTLeitores.getSelectedRow(), 5).toString());
+				}else {
+					JOptionPane.showMessageDialog(null, "Selecione uma linha");
 				}
+				
+				
 			}
 		});
-		jTLeitores.addMouseListener(new MouseAdapter() {
+		JTLeitor.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if(jTLeitores.getSelectedRow() != -1) {
-					txtNome.setText(jTLeitores.getValueAt(jTLeitores.getSelectedRow(), 0).toString());
-					txtSobrenome.setText(jTLeitores.getValueAt(jTLeitores.getSelectedRow(), 1).toString());
-					txtCpf.setText(jTLeitores.getValueAt(jTLeitores.getSelectedRow(), 2).toString());
-					txtSexo.setText(jTLeitores.getValueAt(jTLeitores.getSelectedRow(), 3).toString());
-					txtEmail.setText(jTLeitores.getValueAt(jTLeitores.getSelectedRow(), 4).toString());
-					txtData.setText(jTLeitores.getValueAt(jTLeitores.getSelectedRow(), 5).toString());
+				
+				if(JTLeitor.getSelectedRow() != -1) {
+					String tSexo = (String) JTLeitor.getValueAt(JTLeitor.getSelectedRow(),4).toString();
+					txtNome.setText(JTLeitor.getValueAt(JTLeitor.getSelectedRow(),1).toString());
+					txtSobrenome.setText(JTLeitor.getValueAt(JTLeitor.getSelectedRow(),2).toString());
+					txtCpf.setText(JTLeitor.getValueAt(JTLeitor.getSelectedRow(),3).toString());
+					if(tSexo == "M") {
+						txtSexo.setModel(new DefaultComboBoxModel(new String[] {tSexo,"M"}));;
+					}else {
+						txtSexo.setModel(new DefaultComboBoxModel(new String[] {tSexo,"F"}));;
+					}
+					//(JTLeitor.getValueAt(JTLeitor.getSelectedRow(),4).toString());
+					txtData.setText(JTLeitor.getValueAt(JTLeitor.getSelectedRow(),5).toString());
+					txtEmail.setText(JTLeitor.getValueAt(JTLeitor.getSelectedRow(),6).toString());
+				
+				}else {
+					JOptionPane.showMessageDialog(null, "Selecione uma linha");
 				}
+				
 			}
 		});
-		jTLeitores.setModel(new DefaultTableModel(
+		JTLeitor.setModel(new DefaultTableModel(
 			new Object[][] {
 			},
 			new String[] {
-				"Nome", "Sobrenome", "CPF", "Sexo", "Email", "Data de Nascimento"
+				"Id", "Nome", "Sobrenome", "CPF", "Sexo", "Data de Nascimento", "Email"
 			}
 		) {
 			boolean[] columnEditables = new boolean[] {
-				false, true, true, true, true, true
+				false, false, false, false, false, false, false
 			};
 			public boolean isCellEditable(int row, int column) {
 				return columnEditables[column];
 			}
 		});
-		jTLeitores.getColumnModel().getColumn(0).setPreferredWidth(115);
-		jTLeitores.getColumnModel().getColumn(1).setPreferredWidth(132);
-		jTLeitores.getColumnModel().getColumn(2).setPreferredWidth(86);
-		jTLeitores.getColumnModel().getColumn(4).setPreferredWidth(105);
-		jTLeitores.getColumnModel().getColumn(5).setPreferredWidth(116);
-		scrollPane.setViewportView(jTLeitores);
-		panel_1.setLayout(gl_panel_1);
+		JTLeitor.getColumnModel().getColumn(5).setPreferredWidth(153);
+		scrollPane.setViewportView(JTLeitor);
+		readJTable();
 
 	}
-	public TableModel getTableModel() {
-		return jTLeitores.getModel();
+	
+	public void readJTable() {
+		DefaultTableModel modelo = (DefaultTableModel) JTLeitor.getModel();
+		modelo.setNumRows(0);
+		LeitorDAO ldao = new LeitorDAO();
+		
+		for(Leitor l: ldao.read()) {
+			modelo.addRow(new Object[] {
+				l.getIdLeitor(),
+				l.getNome(),
+				l.getSobrenome(),
+				l.getCpf(),
+				l.getSexo(),
+				l.getDataNascimento(),
+				l.getEmail()
+				
+			});
+		}
 	}
-	public void setTableModel(TableModel model) {
-		jTLeitores.setModel(model);
+	
+	public void readJTableForName(String nome) {
+		DefaultTableModel modelo = (DefaultTableModel) JTLeitor.getModel();
+		modelo.setNumRows(0);
+		LeitorDAO ldao = new LeitorDAO();
+		
+		for(Leitor l: ldao.readForName(nome)) {
+			modelo.addRow(new Object[] {
+				l.getIdLeitor(),
+				l.getNome(),
+				l.getSobrenome(),
+				l.getCpf(),
+				l.getSexo(),
+				l.getDataNascimento(),
+				l.getEmail()
+				
+			});
+		}
 	}
 }

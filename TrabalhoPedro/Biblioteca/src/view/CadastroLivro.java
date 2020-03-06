@@ -7,6 +7,9 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.ImageIcon;
 
 public class CadastroLivro extends JInternalFrame {
 	/**
@@ -134,12 +137,21 @@ public class CadastroLivro extends JInternalFrame {
 		textField_6.setColumns(10);
 		
 		JButton btnOk = new JButton("OK");
+		btnOk.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		btnOk.setBounds(125, 349, 65, 23);
 		panel.add(btnOk);
 		
 		JButton btnCancelar = new JButton("Cancelar");
 		btnCancelar.setBounds(268, 349, 103, 23);
 		panel.add(btnCancelar);
+		
+		JLabel label = new JLabel("");
+		label.setIcon(new ImageIcon("C:\\Users\\Suporte\\Desktop\\Trabalho\\TrabalhoPedro\\Biblioteca\\src\\images\\ca.jpg"));
+		label.setBounds(0, 0, 485, 396);
+		panel.add(label);
 
 	}
 }
